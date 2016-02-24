@@ -1,5 +1,5 @@
 # Homepage (Root path)
 get '/' do
-  @address = "Kamloops,+BC"
+  @address = "Whistler,+BC"
   erb :index
 end
