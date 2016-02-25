@@ -18,3 +18,8 @@ get '/results/index' do
 end
 
 
+#What we need to implement:
+# Once given a budget value, need to see how far
+# user can drive based on average gas prices..
+
+
