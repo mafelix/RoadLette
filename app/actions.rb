@@ -1,7 +1,6 @@
 require 'pry'
 # Homepage (Root path)
 get '/' do
-  @address = "Whistler,+BC"
   erb :index
 end
 
@@ -13,6 +12,9 @@ post '/results/index' do
   redirect '/results/index'
 end
 
-
+get '/results/index' do
+  @address = 'Whistler,+BC'
+  erb :'/results/index'
+end
 
 

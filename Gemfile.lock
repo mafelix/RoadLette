@@ -76,6 +76,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  json
   pry
   puma
   rake
