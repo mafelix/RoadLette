@@ -1,19 +1,56 @@
-<h1>Home Page</h1>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Travlett</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#">Signin <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Signout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- <div class="jumbotron"> -->
+<!--     <header id="container"> -->
+        <div class="hero_area">
+          <video id="sensi-video" loop="loop" preload="auto" class="video-playing" autoplay="autoplay">
+            <source type="video/webm" src="videos/sensi-vid.webm"></source>
+            <source type="video/mp4" src="https://a0.muscache.com/airbnb/static/Paris-P1-1.mp4"></source>
+          </video>
+          <div class="randombebe"><h1 id="hero_name">Travlett</h1>   
+      <p>Replace this line with the form: budget and timeframe</p>
+      <p><a class="btn btn-success">Roll</a></p></div>
+      </div>
+
+</div>
 
 
-  https://www.google.com/maps/embed/v1/directions
-  ?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-  &origin=Vancouver+Canada
-  &destination=Richmond+Canada
-  &mode=driving
-<!--   &avoid=tolls|highways -->
-
-
-<iframe
+<!-- <iframe
   width="600"
   height="450"
   frameborder="0" style="border:0"
   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
     &q=<%=@address%>" allowfullscreen>
-</iframe>
+</iframe> -->
 
