@@ -1,14 +1,42 @@
 require 'pry'
+include Math
 # Homepage (Root path)
+helpers do
 
-before '/results/index' do
-  page = HTTParty.get('http://www.gasbuddy.com/')
-  @parse_page = Nokogiri::HTML(page)
-  @parse_page = @parse_page.css('.gb-price-lg')[0].children[0].to_s.to_f
+  def calculate_destination    #(starting_lat, starting_long)
+    @EARTH_RADIUS = 6371   #km
+    @R = @EARTH_RADIUS
+    @d = @total_distance
+    
+    distance = 300
+
+
+
+    @destination_array = []
+    starting_lat = 49.2820150 #lighthouse labs location
+    starting_long = -123.1082410
+    @direction = rand(0..360)
+
+    @end_latitude = Math.asin(Math.sin(starting_lat)*Math.cos(distance/@R)+ Math.cos(starting_lat)*Math.sin(distance/@R)*Math.cos(@direction))
+    @end_longitude = starting_long + Math.atan2(Math.sin(@direction)*Math.sin(distance/@R)*Math.cos(starting_lat), Math.cos(distance/@R)-Math.sin(starting_lat)*Math.sin(@end_latitude))
+    @destination_array << @end_latitude
+    @destination_array << @end_longitude
+  end
+
+
+  def travel_distance
+    page = HTTParty.get('http://www.gasbuddy.com/')
+    @parse_page = Nokogiri::HTML(page)
+    @average_gas_price = @parse_page.css('.gb-price-lg')[0].children[0].to_s.to_f
+    @total_distance = @income/@average_gas_price
+  end
+
 
 end
 
+
 get '/' do
+  calculate_destination
   erb :index
 end
 
