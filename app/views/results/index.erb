@@ -66,3 +66,13 @@ src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsH
 <div>
   <p>The Current Gas Price IS: </p><%= @parse_page %>
 </div>
+
+latitude
+longitude
+d = distance = budge / current gas price
+R = 6,371km
+brng = bearing (randomly generated)
+
+latitude2 = Math.asin( Math.sin(latitude)*Math.cos(d/R) + Math.cos(latitude)*Math.sin(d/R)*Math.cos(brng) )
+
+longitude2 = longitude + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(latitude), Math.cos(d/R)-Math.sin(latitude)*Math.sin(longitude2))
