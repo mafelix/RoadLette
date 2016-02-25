@@ -24,3 +24,8 @@ get '/results' do
   binding.pry
   erb :'results/index'
 end
+
+
+#What we need to implement:
+# Once given a budget value, need to see how far
+# user can drive based on average gas prices..
