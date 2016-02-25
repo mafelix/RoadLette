@@ -1,4 +1,38 @@
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Travlett</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#">Signin <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Signout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="google_holding">
 <iframe id='googlemaps'
 width="600"
 height="450"
@@ -6,7 +40,14 @@ frameborder="0" style="border:0"
 src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
 &origin=<%=@address%>
 &destination=Richmond.+BC>" allowfullscreen>
-</iframe>
+</iframe></div>
+
+
+  <div class="jumbotron">
+  <h1>Info </h1>
+  <p>This is where additional info regarding the results will be.</p>
+  </div>
+
 
 
 
