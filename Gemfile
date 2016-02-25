@@ -17,3 +17,8 @@ group :development, :test do
   gem 'shotgun'
   gem 'sqlite3'
 end
+
+#for webscraping
+gem 'nokogiri'
+gem 'httparty'
+
