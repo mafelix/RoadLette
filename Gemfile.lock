@@ -83,8 +83,8 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  json
   httparty
+  json
   nokogiri
   pry
   puma
