@@ -13,8 +13,7 @@ class CreateUserSearchTable < ActiveRecord::Migration
       t.string :starting_location
       t.string :ending_location
       t.integer :price
-      t.date :starting_date
-      t.date :end_date
+      t.date :days
       t.references :user 
 
 
