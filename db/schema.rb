@@ -17,8 +17,7 @@ ActiveRecord::Schema.define(version: 20160224230253) do
     t.string   "starting_location"
     t.string   "ending_location"
     t.integer  "price"
-    t.date     "starting_date"
-    t.date     "end_date"
+    t.date     "days"
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
