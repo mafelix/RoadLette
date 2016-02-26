@@ -22,7 +22,7 @@ helpers do
     @destination_array << @end_latitude
     @destination_array << @end_longitude
     puts "#{@destination_array} and #{@direction}"
-    binding.pry
+    # binding.pry
     puts ""
   end
 
