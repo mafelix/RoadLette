@@ -76,6 +76,14 @@ helpers do
   def degree(radian)
     (radian*180)/PI
   end
+
+  def wiki_picture (wiki_link)
+    http_page = HTTParty.get (wiki_link)
+    nokogiri_page = Nokogiri::HTML(http_page)
+    wiki_image = nokogiri_page.css('div#mw-content-text table tr')[3].css('a')[0]['href']
+    image_link = "https://en.wikipedia.org#{wiki_pic}"
+  end
+
 end
 
 enable :sessions
@@ -101,6 +109,10 @@ get '/results/index' do
   calculate_destination
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
+
+  #getting wikipedia picture
+  # wiki_picture(wiki_link)
+
   erb :'/results/index'
 end
 
