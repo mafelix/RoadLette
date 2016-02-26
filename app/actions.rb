@@ -1,51 +1,29 @@
 require 'pry'
-include Math
 # Homepage (Root path)
+include Math
 helpers do
 
-  # def calculate_destination    #(starting_lat, starting_long)
-  #   @EARTH_RADIUS = 6371   #km
-  #   @R = @EARTH_RADIUS
-  #   @d = @total_distance
-
+  
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  # def calculate_destination    #(starting_lat, starting_long)
-  #   @EARTH_RADIUS = 6371   #km
-  #   @R = @EARTH_RADIUS
-  #   @d = @total_distance
-    
-  #   distance = 300
-
-  #   @destination_array = []
-  #   starting_lat = radians(49.2820150) #lighthouse labs location
-  #   starting_long = radians(-123.1082410)
-  #   #radians 
-    
-  #   @direction = (rand(0..360))
-
-  #   @end_latitude = Math.asin(Math.sin(starting_lat)*Math.cos(distance/@R)+ Math.cos(starting_lat)*Math.sin(distance/@R)*Math.cos(@direction))
-  #   @end_longitude = starting_long + Math.atan2(Math.sin(@direction)*Math.sin(distance/@R)*Math.cos(starting_lat), Math.cos(distance/@R)-Math.sin(starting_lat)*Math.sin(@end_latitude))
-
-    # @destination_array = []
-    # starting_lat = 49.2820150 #lighthouse labs location
-    # starting_long = -123.1082410
-    # @direction = rand(0..360)
-
-  #   @destination_array << degree(@end_latitude)
-  #   @destination_array << degree(@end_longitude)
-  # end
+  def get_city_name(json)
+    begin
+      return json["geonames"][0]["name"]
+    rescue NoMethodError
+      return nil
+    end
+  end
 
   def calculate_destination
     @destination_array=[]
     lat1 = radians(49.2820150) # starting point's latitude (in radians)
     lon1 = radians(-123.1082410) # starting point's longitude (in radians)
     brng = rand(360).to_f   # bearing (in radians)
-    d = 250.8     # distance to travel in km
+    d = @travel_distance     # distance to travel in km
     @r = 6371.0    # earth's radius in km
-
+    
     lat2 = Math.asin( Math.sin(lat1)*Math.cos(d/@r) + 
     Math.cos(lat1)*Math.sin(d/@r)*Math.cos(brng) )
     # => 0.9227260710962849                  
@@ -59,6 +37,18 @@ helpers do
     lon2 = degree(lon2)
     @destination_array << lat2
     @destination_array << lon2
+
+    @end_lat = @destination_array[0]
+    @end_long = @destination_array[1]
+    
+    #geonames get request to find nearby city
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
+    @geonames = Net::HTTP.get(@uri)
+    if get_city_name(JSON.parse(@geonames)).nil?
+      calculate_destination
+    else
+      @cityname = get_city_name(JSON.parse(@geonames))
+    end
   end
 
   def travel_distance (price, days)
@@ -89,18 +79,17 @@ post '/results/index' do
   @search = Search.create(
   price: params[:price].to_i,
   days: params[:days].to_i,
-  user_id: current_user.id
+  # user_id: current_user.id
 )
   #this will calculate the total travel distance that is valid by budget and days
-  travel_distance(params[:price].to_i, params[:days].to_i)
-   
-  redirect '/results/index'
+  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  redirect "/results/index?travel_distance=#{@travel_distance}"
 end
 
 get '/results/index' do
+  @travel_distance = params[:travel_distance].to_f
   calculate_destination
-  @end_lat = @destination_array[0]
-  @end_long = @destination_array[1]
+
   erb :'/results/index'
 end
 
