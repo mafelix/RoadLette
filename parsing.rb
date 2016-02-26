@@ -24,4 +24,4 @@ require 'pry'
 @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
 geonames = Net::HTTP.get(@uri)
 @cityname = JSON.parse(geonames)["geonames"][0]["name"]  
-p @cityname
+p geonames
