@@ -21,9 +21,6 @@ helpers do
     @end_longitude = starting_long + Math.atan2(Math.sin(@direction)*Math.sin(distance/@R)*Math.cos(starting_lat), Math.cos(distance/@R)-Math.sin(starting_lat)*Math.sin(@end_latitude))
     @destination_array << @end_latitude
     @destination_array << @end_longitude
-    puts "#{@destination_array} and #{@direction}"
-    binding.pry
-    puts ""
   end
 
 
