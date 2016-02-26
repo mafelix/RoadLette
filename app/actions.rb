@@ -43,7 +43,7 @@ helpers do
     lat1 = radians(49.2820150) # starting point's latitude (in radians)
     lon1 = radians(-123.1082410) # starting point's longitude (in radians)
     brng = rand(360).to_f   # bearing (in radians)
-    d = 500.8     # distance to travel in km
+    d = 250.8     # distance to travel in km
     @r = 6371.0    # earth's radius in km
 
     lat2 = Math.asin( Math.sin(lat1)*Math.cos(d/@r) + 
