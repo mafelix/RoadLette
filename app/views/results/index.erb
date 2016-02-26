@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Travlett</a>
+      <a class="navbar-brand" href="/">Travlett</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -24,15 +24,17 @@
           </ul>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">Signin <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Signout</a></li>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/users/signup">Signup</a></li>
+        <li><a href="/users/signin">Signin</a></li>
+      </ul>
       </ul>
     </div>
   </div>
 </nav>
 
 <div id="google_holding">
+
   <iframe id='googlemaps'
   width="600"
   height="450"
@@ -44,6 +46,22 @@
 </div>
 
 <div class="jumbotron">
+=======
+<iframe id='googlemaps'
+width="600"
+height="450"
+frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+&origin=<%=@address%>
+&destination=Richmond.+BC>" allowfullscreen>
+</iframe></div>
+
+  <div class="reroll">
+    <p><a class="btn btn-success">Reroll</a></p>
+  </div>
+
+  <div class="jumbotron">
+
   <h1>Info </h1>
   <p>This is where additional info regarding the results will be.</p>
 </div>
