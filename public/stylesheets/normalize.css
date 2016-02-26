@@ -2982,7 +2982,7 @@ output {
 }
 .form-control {
   /*display: block;*/
-  width: 100%;
+  width: 50%;
   height: 45px;
   padding: 10px 15px;
   font-size: 15px;
@@ -5396,24 +5396,22 @@ a.badge:focus {
   margin-bottom: 50px;
   height: 600px;
   color: inherit;
-  background-color: #ecf0f1;
+  background-color: #18bc9c;
 }
-/*.jumbotron h1,
+.jumbotron h1,
 .jumbotron .h1 {
   color: white;
   font-family: Circular, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   z-index: 30000;
-  margin-top: 10px;*/
-
-
-
-
+  margin-top: 10px;
+  text-align: center;
 }
 }
 .jumbotron p {
   margin-bottom: 15px;
   font-size: 23px;
   font-weight: 200;
+  color: white;
 }
 .jumbotron > hr {
   border-top-color: #cfd9db;
@@ -7532,9 +7530,17 @@ audio, canvas, video{
   text-align: center;
 }
 
+.reroll {
+  text-align: center;
+}
 
+#signupfield h3 {
+  text-align: center;
+}
 
-
+.form-horizontal {
+  margin-left: 300px;
+}
 
 
 
