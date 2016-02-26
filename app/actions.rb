@@ -32,17 +32,18 @@ helpers do
     @total_distance = @income/@average_gas_price
   end
 
+  # def login_user
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+  # end
 
 end
 
 enable :sessions
-# Homepage (Root path)
 
-# helpers do
-#   def current_user
-#     @current_user ||= User.find(session[:user_id]) if session[:user_id]
-#   end
-# end
+
 get '/' do
   calculate_destination
   erb :index
@@ -82,17 +83,17 @@ get '/users/signin' do
   erb :'users/signin'
 end
 
-# get '/users/signin' do
-#   @user = User.find_by(
-#     name: params[:name],
-#     password: params[:password]
-#     )
-#   if @user 
-#     session[:user_id] = @user.id
-#     redirect '/'
-#   else
-#     erb :'/users/signin'
-#   end
-# end
+post '/users/signin' do
+  @user = User.find_by(
+    name: params[:name],
+    password: params[:password]
+    )
+  if @user.password == params[:password] 
+    session[:user_id] = @user.id
+    redirect '/'
+  else
+    erb :'/users/signin'
+  end
+end
 
 

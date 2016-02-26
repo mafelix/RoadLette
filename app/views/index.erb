@@ -24,6 +24,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+          <%if current_user%>
+            <li> Hello <%= current_user.name %>!</li>
+          <%end%>
         <li><a href="/users/signup">Signup</a></li>
         <li><a href="/users/signin">Signin</a></li>
       </ul>
@@ -40,12 +43,14 @@
           </video>
           <div class="randombebe"><h1 id="hero_name">Travlett</h1>   
 
- <div class="form-group has-success">
+<div class="form-group has-success">
   <form class="control-label" method="post" action="/results/index" for="inputSuccess">
-  <input type="post" class="form-control" id="inputSuccess" placeholder="Enter budget...">
-  <input type="post" class="form-control" id="inputSuccess" placeholder="Enter number of days..."></form>
-</div>
-      <p><a class="btn btn-success">Roll</a></p></div>
-      </div>
+    <input type="post" name="price" class="form-control" id="inputSuccess" placeholder="Enter budget...">
+    <input type="post" name="days" class="form-control" id="inputSuccess" placeholder="Enter number of days...">
+    <div>
+      </br> 
+      <input type="Submit" class="btn btn-success" value="Roll">
+    </div>
+  </form>  
 </div>
 
