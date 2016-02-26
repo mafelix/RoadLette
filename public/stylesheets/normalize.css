@@ -43,8 +43,11 @@ summary {
 }
 
 #googlemaps{
-  width:100%;
+  width:1600px;
   height:500px;
+  display: block;
+  margin:0 auto;
+
 }
 /**
  * 1. Correct `inline-block` display not defined in IE 8/9.
