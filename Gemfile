@@ -5,7 +5,7 @@ gem 'rake'
 gem 'activesupport'
 gem 'json'
 
-
+gem 'flickraw'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'

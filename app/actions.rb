@@ -8,35 +8,14 @@ helpers do
   #   @R = @EARTH_RADIUS
   #   @d = @total_distance
 
+  # def get_pictures
+  #   URL: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=@&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9
+  # end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  # def calculate_destination    #(starting_lat, starting_long)
-  #   @EARTH_RADIUS = 6371   #km
-  #   @R = @EARTH_RADIUS
-  #   @d = @total_distance
-    
-  #   distance = 300
-
-  #   @destination_array = []
-  #   starting_lat = radians(49.2820150) #lighthouse labs location
-  #   starting_long = radians(-123.1082410)
-  #   #radians 
-    
-  #   @direction = (rand(0..360))
-
-  #   @end_latitude = Math.asin(Math.sin(starting_lat)*Math.cos(distance/@R)+ Math.cos(starting_lat)*Math.sin(distance/@R)*Math.cos(@direction))
-  #   @end_longitude = starting_long + Math.atan2(Math.sin(@direction)*Math.sin(distance/@R)*Math.cos(starting_lat), Math.cos(distance/@R)-Math.sin(starting_lat)*Math.sin(@end_latitude))
-
-    # @destination_array = []
-    # starting_lat = 49.2820150 #lighthouse labs location
-    # starting_long = -123.1082410
-    # @direction = rand(0..360)
-
-  #   @destination_array << degree(@end_latitude)
-  #   @destination_array << degree(@end_longitude)
-  # end
 
   def calculate_destination
     @destination_array=[]
@@ -102,6 +81,10 @@ get '/results/index' do
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
   erb :'/results/index'
+
+  # get photos
+  # #return array of photo urls,
+  # @photo = get_photos[]
 end
 
 get '/users/signup' do
