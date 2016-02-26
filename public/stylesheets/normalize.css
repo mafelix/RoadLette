@@ -15,6 +15,11 @@ html {
 /**
  * Remove default margin.
  */
+#googlemaps{
+  display:block;
+  margin:0 auto;
+  width:1200px;
+}
 
 body {
   margin: 0;
@@ -42,13 +47,6 @@ summary {
   display: block;
 }
 
-#googlemaps{
-  width:1600px;
-  height:500px;
-  display: block;
-  margin:0 auto;
-
-}
 /**
  * 1. Correct `inline-block` display not defined in IE 8/9.
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
