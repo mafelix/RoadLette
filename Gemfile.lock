@@ -83,13 +83,10 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-<<<<<<< HEAD
   httparty
   json
   nokogiri
-=======
   json
->>>>>>> 5fd33d9165fb67ec94361bd22f961b794c0fa038
   pry
   puma
   rake
