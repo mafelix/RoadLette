@@ -8,6 +8,9 @@ gem 'json'
 # gem 'uri'
 # gem 'net/http'
 
+
+gem 'flickraw'
+
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'

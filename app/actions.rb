@@ -2,8 +2,16 @@ require 'pry'
 # Homepage (Root path)
 include Math
 helpers do
-
   
+  # def calculate_destination    #(starting_lat, starting_long)
+  #   @EARTH_RADIUS = 6371   #km
+  #   @R = @EARTH_RADIUS
+  #   @d = @total_distance
+
+  # def get_pictures
+  #   URL: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=@&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9
+  # end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -91,6 +99,10 @@ get '/results/index' do
   calculate_destination
 
   erb :'/results/index'
+
+  # get photos
+  # #return array of photo urls,
+  # @photo = get_photos[]
 end
 
 get '/users/signup' do
