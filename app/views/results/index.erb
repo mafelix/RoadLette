@@ -45,9 +45,14 @@ src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsH
 &destination=<%=@end_lat%>,<%=@end_long%>" allowfullscreen>
 </iframe></div>
 
-  <div class="reroll">
-    <p><a class="btn btn-success">Reroll</a></p>
-  </div>
+<div class="reroll">
+  <form class="control-label" method="get" action="/results/index" for="inputSuccess">
+    <div>
+      </br> 
+      <input type="Submit" class="btn btn-success" value="Roll">
+    </div>
+  </form>  
+</div>
 
 
 
