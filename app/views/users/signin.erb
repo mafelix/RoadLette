@@ -1,0 +1,42 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Travlett</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+    </div>
+  </div>
+</nav>
+
+<div id="signupfield">
+  <h3>Signin with your username and password</h3>
+
+  <form method="get" class="form-horizontal" action="/users/signup">
+    <fieldset>
+      <div class="form-group">
+        <label for="name" class="col-lg-2 control-label">Username</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="name" placeholder="Username">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+        <div class="col-lg-10">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+   
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
