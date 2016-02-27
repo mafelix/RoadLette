@@ -23,5 +23,19 @@ require 'pry'
 @end_long = -123.1082410
 @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
 geonames = Net::HTTP.get(@uri)
+
 @cityname = JSON.parse(geonames)["geonames"][0]["name"]  
 p geonames
+p @cityname
+
+
+#looking for wiki links
+@wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{@end_lat}&lng=#{@end_long}&username=powerup7")
+geowiki = Net::HTTP.get(@wiki_link)
+
+wikipedia_link_string = JSON.parse(geowiki)["geonames"][0]["wikipediaUrl"]
+
+p wikipedia_link_string
+
+
+

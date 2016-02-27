@@ -36,6 +36,7 @@
 
 <div id="google_holding">
 
+<<<<<<< HEAD
   <iframe id='googlemaps'
     width="600"
     height="450"
@@ -45,6 +46,16 @@
     &destination=<%=@cityname%>
     &mode=driving" allowfullscreen>
   </iframe></div>
+=======
+<iframe id='googlemaps'
+width="600"
+height="450"
+frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+&origin=<%=@lat1%>,<%=@long1%>
+&destination=<%=@cityname%>" allowfullscreen>
+</iframe></div>
+>>>>>>> work
 
 <div class="reroll">
   <form class="control-label" method="get" action="/results/index" for="inputSuccess">
@@ -90,6 +101,10 @@
     &location=<%=@cityname%>" allowfullscreen>
   </iframe>
   </div>
+</div>
+
+<div>
+  @wiki_link
 </div>
 
 
