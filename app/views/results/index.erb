@@ -44,7 +44,7 @@
     src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
     &origin=<%=@lat1%>,<%=@long1%>
     &destination=<%=@cityname%>
-    &mode=driving " allowfullscreen>
+    &mode=driving" allowfullscreen>
   </iframe></div>
 
 
@@ -58,7 +58,7 @@
 </div>
 
 
-<% request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=vancouver'))
+<% request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@real_city_name}"))
     # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
     id=[]
     secret=[]
@@ -76,9 +76,9 @@
       farm << JSON.parse(request)["photos"]["photo"][i]["farm"]
 
     end
-
-    
+ 
  %>
+
 <table align = "center">
 <tr>
 <td>
