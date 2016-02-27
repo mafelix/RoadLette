@@ -56,26 +56,16 @@ helpers do
 
   def city_name (coordinates)
     #geonames get request to find nearby city
-    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
-    if get_city_name(JSON.parse(@geonames)).nil?
-      calculate_destination
+    json_city_name = get_city_name(JSON.parse(@geonames))
+    puts json_city_name
+    if json_city_name.nil?
+      nil
     else
-      @cityname = get_city_name(JSON.parse(@geonames))
-        if @cityname[" "]
-          @real_city_name = @cityname.gsub(' ', '')
-        else
-          @real_city_name = @cityname
-        end
+      @cityname = json_city_name
+      @real_city_name = @cityname.gsub(' ', '')
     end
-
-  #   if @cityname && @cityname[" "]
-      
-  #   elsif @cityname
-  #     @real_city_name = @cityname
-  #   else
-  #     nil
-  #   end
   end
 
 
@@ -86,6 +76,7 @@ helpers do
       nil
     else
       gif_link = JSON.parse(geowiki)["geonames"][0]["wikipediaUrl"]
+      gif_link = "http://#{gif_link}"
     end
   end
 
@@ -93,7 +84,8 @@ helpers do
     page = HTTParty.get('http://www.gasbuddy.com/')
     @parse_page = Nokogiri::HTML(page)
     @average_gas_price = @parse_page.css('.gb-price-lg')[0].children[0].to_s.to_f / 100
-    @total_distance = price / @average_gas_price *10
+    @total_distance = price / @average_gas_price *6
+    @total_distance = @total_distance**0.98
     @total_distance > (days * 800) ? (days * 800) : @total_distance
   end
 
@@ -105,36 +97,64 @@ helpers do
     (radian*180)/PI
   end
 
-  # def wiki_picture (wiki_link)
-  #   wiki_page = wiki_link
+  def get_wiki_paragraph (wiki_link)
+    if wiki_link.nil?
+      "NOTHING HERE"
+    else
+      page = HTTParty.get (wiki_link)
+      parse_page = Nokogiri::HTML(page)
+
+      output = []
+      (0..1).each do |paragraphs|
+        pg = parse_page.css('p')[paragraphs]
+        unless pg.nil?
+          para = pg.text
+          output << para.gsub(/\[\d\]/,'')
+        end
+      end
+      output[0]+output[1]
+    end
+  end
+
+  def wiki_picture (wiki_link)
+    wiki_page = wiki_link
     
-    
-  #   page = HTTParty.get (wiki_page)
+    page = HTTParty.get (wiki_page)
        
-  #   parse_page = Nokogiri::HTML(page)
+    parse_page = Nokogiri::HTML(page)
 
-  #   wiki_pic = []
-  #   (0..4).each do |i|
-  #     test = parse_page.css('div#mw-content-text table tr')[i].css('a')
-  #     (wiki_pic << test[0]['href']) unless test.empty?
-  #   end
+    wiki_pic = []
+    (0..4).each do |i|
+      parse_css = parse_page.css('div#mw-content-text table tr')[i]
+      unless parse_css.nil?
+        acss = parse_css.css('a')
+        (wiki_pic << acss[0]['href']) unless acss.empty?
+      end
+    end
 
-  #   pic_link = []
-  #   wiki_pic.each do |link|
-  #     pic_link << "https://en.wikipedia.org#{link}"
-  #   end
+    pic_link = []
+    wiki_pic.each do |link|
+      pic_link << "https://en.wikipedia.org#{link}"
+    end
 
     
-  #   real_image = []
-  #   pic_link.each do |i|
-  #     a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
-  #     (real_image << "https:#{a_image['href']}") unless a_image.nil?
-  #   end
+    real_image = []
+    pic_link.each do |i|
+      a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
+      (real_image << "https:#{a_image['href']}") unless a_image.nil?
+    end
 
-  #   real_image[0]
-  # end
-
+    if real_image[0].nil? 
+      "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
+    elsif (real_image == "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg") && real_image[1] != nil
+      real_image[1]
+    else
+      real_image[0]
+    end
+  end
 end
+
+
 
 enable :sessions
 
@@ -164,23 +184,20 @@ end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
-  calculate_destination
 
-
-  @end_lat = @destination_array[0]
-  @end_long = @destination_array[1]
-
-  city_name(@destination_array)
+  @city_name = nil
+  while @city_name.nil?
+    calculate_destination
+    @end_lat = @destination_array[0]
+    @end_long = @destination_array[1]
+    @city_name = city_name(@destination_array)
+  end
+  
   @wiki_link = get_wiki_link(@destination_array)
-  #getting wikipedia picture
+  @wiki_paragraph = get_wiki_paragraph(@wiki_link)
+  # getting wikipedia picture
 
-  # wiki_picture(@wiki_link) unless @wiki_link.nil?
-
-
-  # wiki_picture(wiki_link)
-
-
-
+  @wiki_img = wiki_picture(@wiki_link) unless @wiki_link.nil?
   erb :'/results/index'
 
   # get photos
@@ -219,7 +236,5 @@ post '/users/signin' do
   else
     erb :'/users/signin'
   end
+
 end
-
-
-
