@@ -18,7 +18,8 @@ html {
 #googlemaps{
   display:block;
   margin:0 auto;
-  width:1200px;
+  width:85%;
+  height:80vh;
 }
 
 body {

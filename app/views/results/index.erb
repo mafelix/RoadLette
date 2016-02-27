@@ -46,22 +46,18 @@
     &mode=driving" allowfullscreen>
   </iframe></div>
 
-
-<!--   <div class="reroll">
-    <p><a class="btn btn-success">Reroll</a></p>
-  </div>
- -->
-
+<div class="reroll">
   <form class="control-label" method="get" action="/results/index" for="inputSuccess">
       <div>
         </br> 
-        <input type="Submit" class="btn btn-success" value="Roll">
+        <input type="Submit" class="btn btn-success" value="ReRoad">
       </div>
     </form>  
 </div>
 
+</br>
 
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <div id="google_holding">
     <iframe id='googlemaps'
     width="600"
@@ -70,8 +66,30 @@
     src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
     &location=<%=@cityname%>" allowfullscreen>
   </iframe>
+  </div>
+</div> -->
+
 </div>
 
+<div class="jumbotron">
+  <div class="container">
+    <h1>Where am I?</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <img style='float:left;width:200px;height:200px; margin-right:10px;' src="img/me.jpg" />
+            <p>Lots of text here...With the four tiers of grids available you're bound to run into issues where, at certain breakpoints, your columns don't clear quite right as one is taller than the other. To fix that, use a combination of a .clearfix and o</p>
+        </div>
+    </div>
+
+  <div id="google_holding">
+    <iframe id='googlemaps'
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+    &location=<%=@cityname%>" allowfullscreen>
+  </iframe>
+  </div>
 </div>
 
 

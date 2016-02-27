@@ -97,14 +97,13 @@ end
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
   calculate_destination
-<<<<<<< HEAD
-=======
+
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
 
   #getting wikipedia picture
   # wiki_picture(wiki_link)
->>>>>>> add_wiki
+
 
   erb :'/results/index'
 end
