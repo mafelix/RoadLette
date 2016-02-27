@@ -79,18 +79,25 @@ end
 enable :sessions
 
 
+post '/' do
+  @search = Search.create(
+  price: params[:price].to_i,
+  days: params[:days].to_i)
+  # user_id: current_user.id
+  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  session[:distance] = @travel_distance
+  redirect "/results/index?travel_distance=#{@travel_distance}"
+end
+
 get '/' do
   erb :index
 end
 
 post '/results/index' do
-  @search = Search.create(
-  price: params[:price].to_i,
-  days: params[:days].to_i,
-  # user_id: current_user.id
-)
+
   #this will calculate the total travel distance that is valid by budget and days
-  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  # @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  @travel_distance = session[:distance]
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
 
@@ -98,12 +105,12 @@ get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
   calculate_destination
 
+
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
 
   #getting wikipedia picture
   # wiki_picture(wiki_link)
-
 
   erb :'/results/index'
 end
