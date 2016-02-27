@@ -56,15 +56,16 @@ helpers do
 
   def city_name (coordinates)
     #geonames get request to find nearby city
-    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
-    if get_city_name(JSON.parse(@geonames)).nil?
-      calculate_destination
+    json_city_name = get_city_name(JSON.parse(@geonames))
+    puts json_city_name
+    if json_city_name.nil?
+      nil
     else
-      @cityname = get_city_name(JSON.parse(@geonames))
+      @cityname = json_city_name
+      @real_city_name = @cityname.gsub(' ', '')
     end
-    @real_city_name = @cityname.gsub(' ', '')
-    # binding.pry
   end
 
 
@@ -85,6 +86,7 @@ helpers do
     @parse_page = Nokogiri::HTML(page)
     @average_gas_price = @parse_page.css('.gb-price-lg')[0].children[0].to_s.to_f / 100
     @total_distance = price / @average_gas_price *6
+    @total_distance = @total_distance**0.98
     @total_distance > (days * 800) ? (days * 800) : @total_distance
   end
 
@@ -105,8 +107,11 @@ helpers do
 
       output = []
       (0..1).each do |paragraphs|
-        para = parse_page.css('p')[paragraphs].text
-        output << para.gsub(/\[\d\]/,'')
+        pg = parse_page.css('p')[paragraphs]
+        unless pg.nil?
+          para = pg.text
+          output << para.gsub(/\[\d\]/,'')
+        end
       end
       output[0]+output[1]
     end
@@ -179,13 +184,15 @@ end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
-  calculate_destination
 
-
-  @end_lat = @destination_array[0]
-  @end_long = @destination_array[1]
-
-  city_name(@destination_array)
+  @city_name = nil
+  while @city_name.nil?
+    calculate_destination
+    @end_lat = @destination_array[0]
+    @end_long = @destination_array[1]
+    @city_name = city_name(@destination_array)
+  end
+  
   @wiki_link = get_wiki_link(@destination_array)
   @wiki_paragraph = get_wiki_paragraph(@wiki_link)
   # getting wikipedia picture

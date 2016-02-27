@@ -59,6 +59,7 @@
 
 
 <% request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@real_city_name}"))
+  puts @real_city_name
     # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
     id=[]
     secret=[]
@@ -69,7 +70,6 @@
       # secret = JSON.parse(request)["photos"]["photo"][2]["secret"]
       # server = JSON.parse(request)["photos"]["photo"][2]["server"]
       # farm = JSON.parse(request)["photos"]["photo"][2]["farm"]
-
       id << JSON.parse(request)["photos"]["photo"][i]["id"]
       secret << JSON.parse(request)["photos"]["photo"][i]["secret"]
       server << JSON.parse(request)["photos"]["photo"][i]["server"]
