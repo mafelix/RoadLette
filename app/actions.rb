@@ -76,6 +76,7 @@ helpers do
       nil
     else
       gif_link = JSON.parse(geowiki)["geonames"][0]["wikipediaUrl"]
+      gif_link = "http://#{gif_link}"
     end
   end
 
@@ -83,7 +84,7 @@ helpers do
     page = HTTParty.get('http://www.gasbuddy.com/')
     @parse_page = Nokogiri::HTML(page)
     @average_gas_price = @parse_page.css('.gb-price-lg')[0].children[0].to_s.to_f / 100
-    @total_distance = price / @average_gas_price *10
+    @total_distance = price / @average_gas_price *6
     @total_distance > (days * 800) ? (days * 800) : @total_distance
   end
 
@@ -95,34 +96,58 @@ helpers do
     (radian*180)/PI
   end
 
-  # def wiki_picture (wiki_link)
-  #   wiki_page = wiki_link
+  def get_wiki_paragraph (wiki_link)
+    if wiki_link.nil?
+      "NOTHING HERE"
+    else
+      page = HTTParty.get (wiki_link)
+      parse_page = Nokogiri::HTML(page)
+
+      output = []
+      (0..1).each do |paragraphs|
+        para = parse_page.css('p')[paragraphs].text
+        output << para.gsub(/\[\d\]/,'')
+      end
+      output[0]+output[1]
+    end
+  end
+
+  def wiki_picture (wiki_link)
+    wiki_page = wiki_link
     
-    
-  #   page = HTTParty.get (wiki_page)
+    page = HTTParty.get (wiki_page)
        
-  #   parse_page = Nokogiri::HTML(page)
+    parse_page = Nokogiri::HTML(page)
 
-  #   wiki_pic = []
-  #   (0..4).each do |i|
-  #     test = parse_page.css('div#mw-content-text table tr')[i].css('a')
-  #     (wiki_pic << test[0]['href']) unless test.empty?
-  #   end
+    wiki_pic = []
+    (0..4).each do |i|
+      parse_css = parse_page.css('div#mw-content-text table tr')[i]
+      unless parse_css.nil?
+        acss = parse_css.css('a')
+        (wiki_pic << acss[0]['href']) unless acss.empty?
+      end
+    end
 
-  #   pic_link = []
-  #   wiki_pic.each do |link|
-  #     pic_link << "https://en.wikipedia.org#{link}"
-  #   end
+    pic_link = []
+    wiki_pic.each do |link|
+      pic_link << "https://en.wikipedia.org#{link}"
+    end
 
     
-  #   real_image = []
-  #   pic_link.each do |i|
-  #     a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
-  #     (real_image << "https:#{a_image['href']}") unless a_image.nil?
-  #   end
+    real_image = []
+    pic_link.each do |i|
+      a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
+      (real_image << "https:#{a_image['href']}") unless a_image.nil?
+    end
 
-  #   real_image[0]
-  # end
+    if real_image[0].nil? 
+      "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
+    elsif (real_image == "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg") && real_image[1] != nil
+      real_image[1]
+    else
+      real_image[0]
+    end
+  end
 
 end
 
@@ -162,15 +187,10 @@ get '/results/index' do
 
   city_name(@destination_array)
   @wiki_link = get_wiki_link(@destination_array)
-  #getting wikipedia picture
+  @wiki_paragraph = get_wiki_paragraph(@wiki_link)
+  # getting wikipedia picture
 
-  # wiki_picture(@wiki_link) unless @wiki_link.nil?
-
-
-  # wiki_picture(wiki_link)
-
-
-
+  @wiki_img = wiki_picture(@wiki_link) unless @wiki_link.nil?
   erb :'/results/index'
 
   # get photos
@@ -209,6 +229,7 @@ post '/users/signin' do
   else
     erb :'/users/signin'
   end
+
 end
 
 
