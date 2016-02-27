@@ -8,9 +8,15 @@ helpers do
   #   @R = @EARTH_RADIUS
   #   @d = @total_distance
 
-  # def get_pictures
-  #   URL: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=@&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9
-  # end
+  def get_pictures
+    request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=vancouver&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9'))
+    # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+    id = JSON.parse(@request)["photos"]["photo"][0]["id"]
+    secret = JSON.parse(@request)["photos"]["photo"][0]["secret"]
+    server = JSON.parse(@request)["photos"]["photo"][0]["server"]
+    farm = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+  end
+
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -110,8 +116,6 @@ get '/results/index' do
 
   #getting wikipedia picture
   # wiki_picture(wiki_link)
-
-
   erb :'/results/index'
 
   # get photos
@@ -151,5 +155,6 @@ post '/users/signin' do
     erb :'/users/signin'
   end
 end
+
 
 

@@ -12,16 +12,6 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           <%if current_user%>
@@ -41,7 +31,8 @@
             <source type="video/webm" src="videos/sensi-vid.webm"></source>
             <source type="video/mp4" src="https://a0.muscache.com/airbnb/static/Paris-P1-1.mp4"></source>
           </video>
-          <div class="randombebe"><h1 id="hero_name">Travlett</h1>   
+          <div class="randombebe"><h1 id="hero_name">Travlett</h1>  
+            <p>Enter your budget and trip length in days!</p> 
 
 <div class="form-group has-success">
   <form class="control-label" method="post" action="/results/index" for="inputSuccess">
@@ -49,7 +40,7 @@
     <input type="post" name="days" class="form-control" id="inputSuccess" placeholder="Enter number of days...">
     <div>
       </br> 
-      <input type="Submit" class="btn btn-success" value="Roll">
+      <input type="Submit" class="btn btn-success" class="animated shake" value="Roll">
     </div>
   </form>  
 </div>

@@ -33,6 +33,7 @@
   </div>
 </nav>
 
+
 <div id="google_holding">
 
 
@@ -53,23 +54,89 @@ src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsH
     </div>
   </form>  
 </div>
-<!-- 
+
+<% request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=vancouver'))
+    # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+    id=[]
+    secret=[]
+    server=[]
+    farm=[]
+    for i in 0..5
+      # id = JSON.parse(request)["photos"]["photo"][2]["id"]
+      # secret = JSON.parse(request)["photos"]["photo"][2]["secret"]
+      # server = JSON.parse(request)["photos"]["photo"][2]["server"]
+      # farm = JSON.parse(request)["photos"]["photo"][2]["farm"]
+
+      id << JSON.parse(request)["photos"]["photo"][i]["id"]
+      secret << JSON.parse(request)["photos"]["photo"][i]["secret"]
+      server << JSON.parse(request)["photos"]["photo"][i]["server"]
+      farm << JSON.parse(request)["photos"]["photo"][i]["farm"]
+
+    end
+
+    
+ %>
+<table align = "center">
+<tr>
+<td>
 <div>
   <iframe id='flickr'
-  width="500"
-  height="450"
-    
-  src="https://farm2.staticflickr.com/1705/24651507793_a34f9945d7.jpg">
-
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[0]%>.static.flickr.com/<%=server[0]%>/<%=id[0]%>_<%=secret[0]%>.jpg"> 
   </iframe>
-</div> -->
+</div>
+</td>
+<td>
+<div>
+  <iframe id='flickr'
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[1]%>.static.flickr.com/<%=server[1]%>/<%=id[1]%>_<%=secret[1]%>.jpg"> 
+  </iframe>
+</div>
+</td>
+<td>
+<div>
+  <iframe id='flickr'
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[2]%>.static.flickr.com/<%=server[2]%>/<%=id[2]%>_<%=secret[2]%>.jpg"> 
+  </iframe>
+</div>
+</td>
+<td>
+<div>
+  <iframe id='flickr'
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[3]%>.static.flickr.com/<%=server[3]%>/<%=id[3]%>_<%=secret[3]%>.jpg"> 
+  </iframe>
+</div>
+<td>
+<div>
+  <iframe id='flickr'
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[4]%>.static.flickr.com/<%=server[4]%>/<%=id[4]%>_<%=secret[4]%>.jpg"> 
+  </iframe>
+</div>
+<td>
+<div>
+  <iframe id='flickr'
+  width="200"
+  height="150"  
+    src="http://farm<%=farm[5]%>.static.flickr.com/<%=server[5]%>/<%=id[5]%>_<%=secret[5]%>.jpg"> 
+  </iframe>
+</div>
 
-
-
+</tr>
+</table>
+ 
   <div class="jumbotron">
 
 <div id="google_holding">
-  <iframe id='googlemaps'
+  <iframe id='googlemaps'`
   width="600"
   height="450"
   frameborder="0" style="border:0"
@@ -79,6 +146,7 @@ src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsH
 </div>
 
 </div>
+
 
 
 
