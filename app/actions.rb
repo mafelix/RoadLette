@@ -53,8 +53,6 @@ helpers do
     @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{@end_lat}&lng=#{@end_long}&username=powerup7")
     geowiki = Net::HTTP.get(@wiki_link)
     if geowiki == "{\"geonames\":[]}"
-      binding.pry
-      puts geowiki
       nil
     else
       gif_link = JSON.parse(geowiki)["geonames"][0]["wikipediaUrl"]
@@ -77,66 +75,79 @@ helpers do
     (radian*180)/PI
   end
 
-  def wiki_picture (wiki_link)
-    wiki_page = wiki_link
-    binding.pry
+  # def wiki_picture (wiki_link)
+  #   wiki_page = wiki_link
     
-    page = HTTParty.get (wiki_page)
-       binding.pry
-    parse_page = Nokogiri::HTML(page)
+    
+  #   page = HTTParty.get (wiki_page)
+       
+  #   parse_page = Nokogiri::HTML(page)
 
-    wiki_pic = []
-    (0..4).each do |i|
-      test = parse_page.css('div#mw-content-text table tr')[i].css('a')
-      (wiki_pic << test[0]['href']) unless test.empty?
-    end
+  #   wiki_pic = []
+  #   (0..4).each do |i|
+  #     test = parse_page.css('div#mw-content-text table tr')[i].css('a')
+  #     (wiki_pic << test[0]['href']) unless test.empty?
+  #   end
 
-    pic_link = []
-    wiki_pic.each do |link|
-      pic_link << "https://en.wikipedia.org#{link}"
-    end
+  #   pic_link = []
+  #   wiki_pic.each do |link|
+  #     pic_link << "https://en.wikipedia.org#{link}"
+  #   end
 
-    binding.pry
-    real_image = []
-    pic_link.each do |i|
-      a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
-      (real_image << "https:#{a_image['href']}") unless a_image.nil?
-    end
+    
+  #   real_image = []
+  #   pic_link.each do |i|
+  #     a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
+  #     (real_image << "https:#{a_image['href']}") unless a_image.nil?
+  #   end
 
-    real_image[0]
-  end
+  #   real_image[0]
+  # end
 
 end
 
 enable :sessions
 
 
+post '/' do
+  @search = Search.create(
+  price: params[:price].to_i,
+  days: params[:days].to_i)
+  # user_id: current_user.id
+  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  session[:distance] = @travel_distance
+  redirect "/results/index?travel_distance=#{@travel_distance}"
+end
+
 get '/' do
   erb :index
 end
 
 post '/results/index' do
-  @search = Search.create(
-  price: params[:price].to_i,
-  days: params[:days].to_i,
-  # user_id: current_user.id
-)
+
   #this will calculate the total travel distance that is valid by budget and days
-  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  # @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  @travel_distance = session[:distance]
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
   calculate_destination
+
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
 
   city_name(@destination_array)
   @wiki_link = get_wiki_link(@destination_array)
   #getting wikipedia picture
-  wiki_picture(@wiki_link) unless @wiki_link.nil?
-  binding.pry
+
+  # wiki_picture(@wiki_link) unless @wiki_link.nil?
+
+
+  # wiki_picture(wiki_link)
+
+
   erb :'/results/index'
 end
 
