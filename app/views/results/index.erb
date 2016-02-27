@@ -57,80 +57,133 @@
     </form>  
 </div>
 
+</br>
 
-<% request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@real_city_name}"))
-    # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
-    id=[]
-    secret=[]
-    server=[]
-    farm=[]
-    for i in 0..5
-      # id = JSON.parse(request)["photos"]["photo"][2]["id"]
-      # secret = JSON.parse(request)["photos"]["photo"][2]["secret"]
-      # server = JSON.parse(request)["photos"]["photo"][2]["server"]
-      # farm = JSON.parse(request)["photos"]["photo"][2]["farm"]
+<% 
+if @real_city_name
+  request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@real_city_name}"))
+      # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+      id=[]
+      secret=[]
+      server=[]
+      farm=[]
+      for i in 0..5
+        # id = JSON.parse(request)["photos"]["photo"][2]["id"]
+        # secret = JSON.parse(request)["photos"]["photo"][2]["secret"]
+        # server = JSON.parse(request)["photos"]["photo"][2]["server"]
+        # farm = JSON.parse(request)["photos"]["photo"][2]["farm"]
 
-      id << JSON.parse(request)["photos"]["photo"][i]["id"]
-      secret << JSON.parse(request)["photos"]["photo"][i]["secret"]
-      server << JSON.parse(request)["photos"]["photo"][i]["server"]
-      farm << JSON.parse(request)["photos"]["photo"][i]["farm"]
-
+        id << JSON.parse(request)["photos"]["photo"][i]["id"]
+        secret << JSON.parse(request)["photos"]["photo"][i]["secret"]
+        server << JSON.parse(request)["photos"]["photo"][i]["server"]
+        farm << JSON.parse(request)["photos"]["photo"][i]["farm"]
     end
+end
+
  
  %>
+
+<!-- <input type="checkbox" id="check" style="display:none;">
+<label for="check">
+    <img src="http://lorempixel.com/400/400/" width="200">
+    </label>
+<label for="check">
+    <div id="cover">
+    <div id="box">
+    <img src="http://lorempixel.com/400/400/" width="400">
+    </div>
+    </div>
+    </label> -->
 
 <table align = "center">
 <tr>
 <td>
 <div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[0]%>.static.flickr.com/<%=server[0]%>/<%=id[0]%>_<%=secret[0]%>.jpg"> 
-  </iframe>
+  <input type="checkbox" id="check" style="display:none;">
+  <label for="check">
+      <img src="http://farm<%=farm[0]%>.static.flickr.com/<%=server[0]%>/<%=id[0]%>_<%=secret[0]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check">
+      <div id="cover">
+      <div id="box">
+      <img src="http://farm<%=farm[0]%>.static.flickr.com/<%=server[0]%>/<%=id[0]%>_<%=secret[0]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
+</div>
+</td>
+
+<td>
+<div>
+  <input type="checkbox" id="check1" style="display:none;">
+  <label for="check1">
+      <img src="http://farm<%=farm[1]%>.static.flickr.com/<%=server[1]%>/<%=id[1]%>_<%=secret[1]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check1">
+      <div id="cover1">
+      <div id="box1">
+      <img src="http://farm<%=farm[1]%>.static.flickr.com/<%=server[1]%>/<%=id[1]%>_<%=secret[1]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
 </div>
 </td>
 <td>
 <div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[1]%>.static.flickr.com/<%=server[1]%>/<%=id[1]%>_<%=secret[1]%>.jpg"> 
-  </iframe>
+  <input type="checkbox" id="check2" style="display:none;">
+  <label for="check2">
+      <img src="http://farm<%=farm[2]%>.static.flickr.com/<%=server[2]%>/<%=id[2]%>_<%=secret[2]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check2">
+      <div id="cover2">
+      <div id="box2">
+      <img src="http://farm<%=farm[2]%>.static.flickr.com/<%=server[2]%>/<%=id[2]%>_<%=secret[2]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
 </div>
 </td>
 <td>
 <div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[2]%>.static.flickr.com/<%=server[2]%>/<%=id[2]%>_<%=secret[2]%>.jpg"> 
-  </iframe>
-</div>
-</td>
-<td>
-<div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[3]%>.static.flickr.com/<%=server[3]%>/<%=id[3]%>_<%=secret[3]%>.jpg"> 
-  </iframe>
+  <input type="checkbox" id="check3" style="display:none;">
+  <label for="check3">
+      <img src="http://farm<%=farm[3]%>.static.flickr.com/<%=server[3]%>/<%=id[3]%>_<%=secret[3]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check3">
+      <div id="cover3">
+      <div id="box3">
+      <img src="http://farm<%=farm[3]%>.static.flickr.com/<%=server[3]%>/<%=id[3]%>_<%=secret[3]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
 </div>
 <td>
 <div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[4]%>.static.flickr.com/<%=server[4]%>/<%=id[4]%>_<%=secret[4]%>.jpg"> 
-  </iframe>
+  <input type="checkbox" id="check4" style="display:none;">
+  <label for="check4">
+      <img src="http://farm<%=farm[4]%>.static.flickr.com/<%=server[4]%>/<%=id[4]%>_<%=secret[4]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check4">
+      <div id="cover4">
+      <div id="box4">
+      <img src="http://farm<%=farm[4]%>.static.flickr.com/<%=server[4]%>/<%=id[4]%>_<%=secret[4]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
 </div>
 <td>
 <div>
-  <iframe id='flickr'
-  width="200"
-  height="150"  
-    src="http://farm<%=farm[5]%>.static.flickr.com/<%=server[5]%>/<%=id[5]%>_<%=secret[5]%>.jpg"> 
-  </iframe>
+  <input type="checkbox" id="check5" style="display:none;">
+  <label for="check5">
+      <img src="http://farm<%=farm[5]%>.static.flickr.com/<%=server[5]%>/<%=id[5]%>_<%=secret[5]%>.jpg" width="150" height="150">
+      </label>
+  <label for="check5">
+      <div id="cover5">
+      <div id="box5">
+      <img src="http://farm<%=farm[5]%>.static.flickr.com/<%=server[5]%>/<%=id[5]%>_<%=secret[5]%>.jpg" width="500" height="500">
+      </div>
+      </div>
+      </label>
 </div>
 
 </tr>

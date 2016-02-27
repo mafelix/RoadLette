@@ -8,14 +8,14 @@ helpers do
   #   @R = @EARTH_RADIUS
   #   @d = @total_distance
 
-  def get_pictures
-    request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=vancouver&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9'))
-    # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
-    id = JSON.parse(@request)["photos"]["photo"][0]["id"]
-    secret = JSON.parse(@request)["photos"]["photo"][0]["secret"]
-    server = JSON.parse(@request)["photos"]["photo"][0]["server"]
-    farm = JSON.parse(@request)["photos"]["photo"][0]["farm"]
-  end
+  # def get_pictures
+  #   request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=vancouver&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9'))
+  #   # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+  #   id = JSON.parse(@request)["photos"]["photo"][0]["id"]
+  #   secret = JSON.parse(@request)["photos"]["photo"][0]["secret"]
+  #   server = JSON.parse(@request)["photos"]["photo"][0]["server"]
+  #   farm = JSON.parse(@request)["photos"]["photo"][0]["farm"]
+  # end
 
 
   def current_user
@@ -62,11 +62,21 @@ helpers do
       calculate_destination
     else
       @cityname = get_city_name(JSON.parse(@geonames))
+        if @cityname[" "]
+          @real_city_name = @cityname.gsub(' ', '')
+        else
+          @real_city_name = @cityname
+        end
     end
-    @real_city_name = @cityname.gsub(' ', '')
-    # binding.pry
-  end
 
+  #   if @cityname && @cityname[" "]
+      
+  #   elsif @cityname
+  #     @real_city_name = @cityname
+  #   else
+  #     nil
+  #   end
+  end
 
 
   def get_wiki_link (coordinates)
