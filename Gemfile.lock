@@ -88,7 +88,6 @@ DEPENDENCIES
   httparty
   json
   nokogiri
-  json
   pry
   puma
   rake

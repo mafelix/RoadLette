@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Travlett</a>
+      <a class="navbar-brand" href="/">Roadlette</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -37,23 +37,26 @@
 <div id="google_holding">
 
 
-<iframe id='googlemaps'
-width="600"
-height="450"
-frameborder="0" style="border:0"
-src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-&origin=<%=@lat1%>,<%=@long1%>
-&destination=<%=@end_lat%>,<%=@end_long%>" allowfullscreen>
-</iframe></div>
+  <iframe id='googlemaps'
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+    &origin=<%=@lat1%>,<%=@long1%>
+    &destination=<%=@cityname%>
+    &mode=driving " allowfullscreen>
+  </iframe></div>
 
-<div class="reroll">
-  <form class="control-label" method="get" action="/results/index" for="inputSuccess">
-    <div>
-      </br> 
-      <input type="Submit" class="btn btn-success" value="Roll">
-    </div>
-  </form>  
+
+<div class="reroll">                                
+  <form class="control-label" method="post" action="/results/index?travel_distance=<%=@travel_distance%>" for="inputSuccess">
+      <div>
+        </br> 
+        <input type="Submit" class="btn btn-success" value="ReRoad">
+      </div>
+    </form>  
 </div>
+
 
 <% request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=vancouver'))
     # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
@@ -142,9 +145,46 @@ src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsH
   frameborder="0" style="border:0"
   src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
    &location=49.2821612,-123.1080174" allowfullscreen>
+
+</br>
+
+<!-- <div class="jumbotron">
+  <div id="google_holding">
+    <iframe id='googlemaps'
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+    &location=<%=@cityname%>" allowfullscreen>
   </iframe>
+  </div>
+</div> -->
+
 </div>
 
+<div class="jumbotron">
+  <div class="container">
+    <h1>Where am I?</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <img style='float:left;width:200px;height:200px; margin-right:10px;' src="img/me.jpg" />
+            <p>Lots of text here...With the four tiers of grids available you're bound to run into issues where, at certain breakpoints, your columns don't clear quite right as one is taller than the other. To fix that, use a combination of a .clearfix and o</p>
+        </div>
+    </div>
+
+  <div id="google_holding">
+    <iframe id='googlemaps'
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
+    &location=<%=@cityname%>" allowfullscreen>
+  </iframe>
+  </div>
+</div>
+
+<div>
+  @wiki_link
 </div>
 
 

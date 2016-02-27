@@ -45,16 +45,14 @@ helpers do
     lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/@r)*Math.cos(lat1), 
      Math.cos(d/@r)-Math.sin(lat1)*Math.sin(lat2))
     # => 0.0497295729068199      
-    @lat1 = 49.2820150
-    @long1 = -123.1082410
-    lat2 = degree(lat2)
-    lon2 = degree(lon2)
-    @destination_array << lat2
-    @destination_array << lon2
+    @end_lat = degree(lat2)
+    @end_long = degree(lon2)
+    @destination_array << @end_lat
+    @destination_array << @end_long
+  end
 
-    @end_lat = @destination_array[0]
-    @end_long = @destination_array[1]
-    
+
+  def city_name (coordinates)
     #geonames get request to find nearby city
     @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
@@ -62,6 +60,16 @@ helpers do
       calculate_destination
     else
       @cityname = get_city_name(JSON.parse(@geonames))
+    end
+  end
+
+  def get_wiki_link (coordinates)
+    @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{@end_lat}&lng=#{@end_long}&username=powerup7")
+    geowiki = Net::HTTP.get(@wiki_link)
+    if geowiki == "{\"geonames\":[]}"
+      nil
+    else
+      gif_link = JSON.parse(geowiki)["geonames"][0]["wikipediaUrl"]
     end
   end
 
@@ -81,41 +89,81 @@ helpers do
     (radian*180)/PI
   end
 
-  def wiki_picture (wiki_link)
-    http_page = HTTParty.get (wiki_link)
-    nokogiri_page = Nokogiri::HTML(http_page)
-    wiki_image = nokogiri_page.css('div#mw-content-text table tr')[3].css('a')[0]['href']
-    image_link = "https://en.wikipedia.org#{wiki_pic}"
-  end
+  # def wiki_picture (wiki_link)
+  #   wiki_page = wiki_link
+    
+    
+  #   page = HTTParty.get (wiki_page)
+       
+  #   parse_page = Nokogiri::HTML(page)
+
+  #   wiki_pic = []
+  #   (0..4).each do |i|
+  #     test = parse_page.css('div#mw-content-text table tr')[i].css('a')
+  #     (wiki_pic << test[0]['href']) unless test.empty?
+  #   end
+
+  #   pic_link = []
+  #   wiki_pic.each do |link|
+  #     pic_link << "https://en.wikipedia.org#{link}"
+  #   end
+
+    
+  #   real_image = []
+  #   pic_link.each do |i|
+  #     a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
+  #     (real_image << "https:#{a_image['href']}") unless a_image.nil?
+  #   end
+
+  #   real_image[0]
+  # end
 
 end
 
 enable :sessions
 
 
+post '/' do
+  @search = Search.create(
+  price: params[:price].to_i,
+  days: params[:days].to_i)
+  # user_id: current_user.id
+  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  session[:distance] = @travel_distance
+  redirect "/results/index?travel_distance=#{@travel_distance}"
+end
+
 get '/' do
   erb :index
 end
 
 post '/results/index' do
-  @search = Search.create(
-  price: params[:price].to_i,
-  days: params[:days].to_i,
-  # user_id: current_user.id
-)
+
   #this will calculate the total travel distance that is valid by budget and days
-  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  # @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  @travel_distance = session[:distance]
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
   calculate_destination
+
+
   @end_lat = @destination_array[0]
   @end_long = @destination_array[1]
 
+  city_name(@destination_array)
+  @wiki_link = get_wiki_link(@destination_array)
   #getting wikipedia picture
+
+  # wiki_picture(@wiki_link) unless @wiki_link.nil?
+
+
   # wiki_picture(wiki_link)
+
+
+
   erb :'/results/index'
 
   # get photos
