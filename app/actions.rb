@@ -45,6 +45,8 @@ helpers do
     lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/@r)*Math.cos(lat1), 
      Math.cos(d/@r)-Math.sin(lat1)*Math.sin(lat2))
     # => 0.0497295729068199      
+    @lat1 = 49.2820150
+    @long1 = -123.1082410
     @end_lat = degree(lat2)
     @end_long = degree(lon2)
     @destination_array << @end_lat
@@ -61,7 +63,11 @@ helpers do
     else
       @cityname = get_city_name(JSON.parse(@geonames))
     end
+    @real_city_name = @cityname.gsub(' ', '')
+    # binding.pry
   end
+
+
 
   def get_wiki_link (coordinates)
     @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{@end_lat}&lng=#{@end_long}&username=powerup7")
@@ -141,6 +147,7 @@ post '/results/index' do
 
   #this will calculate the total travel distance that is valid by budget and days
   # @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+
   @travel_distance = session[:distance]
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
