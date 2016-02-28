@@ -18,7 +18,7 @@ html {
 #googlemaps{
   display:block;
   margin:0 auto;
-  width:85%;
+  width:85vw;
   height:80vh;
 }
 
@@ -7691,4 +7691,7 @@ audio, canvas, video{
   border:10px;
 }
 
+#destination {
+  margin-left: 27vw;
+}
 

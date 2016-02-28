@@ -9,6 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/">Roadlette</a>
+      <a class="navbar-brand" id="destination" href="#codeword">Pack your bags! You're going to <%= @cityname %>!</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -25,8 +26,15 @@
         </li>
       </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/users/signup">Signup</a></li>
-        <li><a href="/users/signin">Signin</a></li>
+          <%if current_user%>
+              <li><a href="#">Hello <%= current_user.name %>!</a></li>
+            <%end%>
+          <li><a href="/users/signup">Signup</a></li>
+          <% if current_user %>
+            <li><a href="/users/signout">Signout</a></li>
+            <% else %>
+          <li><a href="/users/signin">Signin</a></li>
+          <% end %>
       </ul>
       </ul>
     </div>
@@ -190,7 +198,7 @@
   <div class="jumbotron">
 
 <div id="google_holding">
-  <iframe id='googlemaps'`
+  <iframe id='googlemaps'
   width="600"
   height="450"
   frameborder="0" style="border:0"
@@ -215,7 +223,12 @@
 
 <div class="jumbotron">
   <div class="container">
+
     <h1><%= @city_name %></h1>
+
+  <A NAME="codeword">
+    <h1>Where am I?</h1>
+
     <div class="row">
         <div class="col-md-12">
             <% if @wiki_link.nil?%>
@@ -229,16 +242,7 @@
         </div>
     </div>
 
-  <div id="google_holding">
-    <iframe id='googlemaps'
-    width="600"
-    height="450"
-    frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-    &location=<%=@cityname%>" allowfullscreen>
-  </iframe>
-  </div>
-</div>
+
 
 <div>
   @wiki_link

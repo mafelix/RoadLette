@@ -18,7 +18,11 @@
             <li><a href="#">Hello <%= current_user.name %>!</a></li>
           <%end%>
         <li><a href="/users/signup">Signup</a></li>
+        <% if current_user %>
+          <li><a href="/users/signout">Signout</a></li>
+          <% else %>
         <li><a href="/users/signin">Signin</a></li>
+        <% end %>
       </ul>
     </div>
   </div>

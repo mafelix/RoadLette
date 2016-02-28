@@ -223,5 +223,9 @@ post '/users/signin' do
   else
     erb :'/users/signin'
   end
+end
 
+get '/users/signout' do 
+  session.clear
+  redirect '/'
 end
