@@ -58,8 +58,7 @@
 </div>
 
 
-<% request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@real_city_name}"))
-  puts @real_city_name
+<% request = Net::HTTP.get(URI.parse("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=cc0b1f8c6cf46f727c29ebfa96d3383c&tags=#{@city_name}"))
     # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
     id=[]
     secret=[]
@@ -164,12 +163,16 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Where am I?</h1>
+    <h1><%= @city_name %></h1>
     <div class="row">
         <div class="col-md-12">
-            <a target="_blank" href=<%= @wiki_link %>>
-              <img style='float:left;width:200px;height:200px; margin-right:10px;' src=<%= @wiki_img %> />
-            </a>
+            <% if @wiki_link.nil?%>
+                <img style='float:left;width:200px;height:200px; margin-right:10px;' src=<%= @wiki_img %> />
+            <% else %>
+              <a target="_blank" href=<%= @wiki_link %>>
+                <img style='float:left;width:200px;height:200px; margin-right:10px;' src=<%= @wiki_img %> />
+              </a>
+            <% end %>
             <p><%= @wiki_paragraph %></p>
         </div>
     </div>

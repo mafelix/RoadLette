@@ -2,7 +2,7 @@ require 'pry'
 # Homepage (Root path)
 include Math
 helpers do
-  
+  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
   # def calculate_destination    #(starting_lat, starting_long)
   #   @EARTH_RADIUS = 6371   #km
   #   @R = @EARTH_RADIUS
@@ -59,7 +59,6 @@ helpers do
     @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
     json_city_name = get_city_name(JSON.parse(@geonames))
-    puts json_city_name
     if json_city_name.nil?
       nil
     else
@@ -99,13 +98,13 @@ helpers do
   end
 
   def get_wiki_paragraph (wiki_link)
+    output = []
     if wiki_link.nil?
-      "NOTHING HERE"
+      nil
     else
       page = HTTParty.get (wiki_link)
       parse_page = Nokogiri::HTML(page)
 
-      output = []
       (0..1).each do |paragraphs|
         pg = parse_page.css('p')[paragraphs]
         unless pg.nil?
@@ -146,8 +145,8 @@ helpers do
     end
 
     if real_image[0].nil? 
-      "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
-    elsif (real_image == "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg") && real_image[1] != nil
+      WIKIBOOK
+    elsif (real_image == WIKIBOOK) && real_image[1] != nil
       real_image[1]
     else
       real_image[0]
@@ -197,6 +196,7 @@ get '/results/index' do
   @wiki_paragraph = get_wiki_paragraph(@wiki_link)
   # getting wikipedia picture
 
+  @wiki_img = WIKIBOOK
   @wiki_img = wiki_picture(@wiki_link) unless @wiki_link.nil?
   erb :'/results/index'
 
