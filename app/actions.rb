@@ -70,8 +70,8 @@ helpers do
   end
 
 
-  def get_wiki_link (coordinates)
-    @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{@end_lat}&lng=#{@end_long}&username=powerup7")
+  def get_wiki_link (latitude, longitude)
+    @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{latitude}&lng=#{longitude}&username=powerup7")
     geowiki = Net::HTTP.get(@wiki_link)
     if geowiki == "{\"geonames\":[]}"
       nil
@@ -201,7 +201,7 @@ get '/results/index' do
   @street_view_lat = @geolocation["lat"]
   @street_view_long = @geolocation["lng"]
 
-  @wiki_link = get_wiki_link(@destination_array)
+  @wiki_link = get_wiki_link(@street_view_lat, @street_view_long)
   @wiki_paragraph = get_wiki_paragraph(@wiki_link)
   # getting wikipedia picture
 
