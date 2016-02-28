@@ -4,13 +4,16 @@ include Math
 
 
 helpers do
-  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
+  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" #img for when no wiki img is found 
+  START_LAT = 49.2820150
+  START_LONG = -123.1082410
 
-
+  #defines the current logged in user
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  #returns city if able with json file, else returns nil
   def get_city_name(json)
     begin
       return json["geonames"][0]["name"]
@@ -19,10 +22,11 @@ helpers do
     end
   end
 
+  #finds a random destination location at a given distance and returns an array[lat,long]
   def calculate_destination
     @destination_array=[]
-    lat1 = radians(49.2820150) # starting point's latitude (in radians)
-    lon1 = radians(-123.1082410) # starting point's longitude (in radians)
+    lat1 = radians(START_LAT) # starting point's latitude (in radians)
+    lon1 = radians(START_LONG) # starting point's longitude (in radians)
     brng = rand(360).to_f   # bearing (in radians)
     d = @travel_distance     # distance to travel in km
     @r = 6371.0    # earth's radius in km
@@ -42,13 +46,15 @@ helpers do
     @destination_array << @end_long
   end
 
-  def get_city_province
+  #finds the name of the province of the city
+  def get_city_province (coordinates)
     #geonames province getter
-    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
     geonames = Net::HTTP.get(@uri)
     @province = JSON.parse(geonames)["geonames"][0]["adminName1"]
   end
 
+  #find the name of the nearest city with population 5000+ given coordinates
   def city_name (coordinates)
     #geonames get request to find nearby city
     @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities5000&username=powerup7")
@@ -62,6 +68,7 @@ helpers do
     end
   end
 
+  #find the coordinates of the city given city and province
   def get_geolocation_of_city(city,province)
     #get the geolocation of the city_name search so that google views has coordinates to be put in
     #googlegeocode lat long
@@ -72,7 +79,7 @@ helpers do
     @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"] 
   end
 
-
+  #gets the wikipedia link of the city given coordinates
   def get_wiki_link (latitude, longitude)
     @wiki_link = URI.parse("http://api.geonames.org/findNearbyWikipediaJSON?lat=#{latitude}&lng=#{longitude}&username=powerup7")
     geowiki = Net::HTTP.get(@wiki_link)
@@ -84,6 +91,7 @@ helpers do
     end
   end
 
+  #get the furthest distance one can travel with budget and days
   def travel_distance (price, days)
     page = HTTParty.get('http://www.gasbuddy.com/')
     @parse_page = Nokogiri::HTML(page)
@@ -93,14 +101,17 @@ helpers do
     @total_distance > (days * 800) ? (days * 800) : @total_distance
   end
 
+  #calculates radians with degrees
   def radians(degree)
     (degree*PI)/180
   end
 
+  #calculates degrees with radians
   def degree(radian)
     (radian*180)/PI
   end
 
+  #pull out the first 2 paragraphs with wikipedia link
   def get_wiki_paragraph (wiki_link)
     output = []
     if wiki_link.nil?
@@ -120,6 +131,7 @@ helpers do
     end
   end
 
+  #pulls out the main image from a wikipedia link
   def wiki_picture (wiki_link)
     wiki_page = wiki_link
     
@@ -158,17 +170,22 @@ helpers do
   end
 end
 
-
-
 enable :sessions
 
 
 post '/' do
+  @price = params[:price].gsub('$','').gsub(',','').to_i
+  @days = params[:days].to_i
+  binding.pry
+  (@price = 700) if (@price > 700)
+
+
   @search = Search.create(
-  price: params[:price].to_i,
-  days: params[:days].to_i)
+  price: @price,
+  days: @days
+  )
   # user_id: current_user.id
-  @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
+  @travel_distance = travel_distance(@price, @days)
   session[:distance] = @travel_distance
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
@@ -197,7 +214,7 @@ get '/results/index' do
     @city_name = city_name(@destination_array)
   end
   #getting city province only if cityname is found and valid
-  @province = get_city_province
+  @province = get_city_province(@destination_array)
   get_geolocation_of_city(@city_name, @province)
 
   @street_view_lat = @geolocation["lat"]

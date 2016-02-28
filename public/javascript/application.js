@@ -30,9 +30,69 @@ $(document).ready(function() {
             listTickerInner(nextIndex);
         }, options.interval);
 
+<<<<<<< HEAD
     };
     
     listTickerInner(options.startIndex);
+=======
+function buildWave(w, h) {
+  
+  const a = h / 4;
+  const y = h / 2;
+  
+  const pathData = [
+    'M', w * 0, y + a / 2, 
+    'c', 
+      a * m, 0,
+      -(1 - a) * m, -a, 
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a,
+    's', 
+      -(1 - a) * m, a,
+      a, a,
+    's', 
+      -(1 - a) * m, -a,
+      a, -a
+  ].join(' ');
+  
+  path.setAttribute('d', pathData);
+>>>>>>> 8c69d3a849fe6a95f675dac96587ac68768b11b9
 }
     
 var textlist = new Array("This is a million dollar idea! - Don Burk", "This is nice! - Monica Olinescu", "This .... fucking sucks! - David VanDusen", "This is NOT better than FoosBall... - Rosy Lee");
