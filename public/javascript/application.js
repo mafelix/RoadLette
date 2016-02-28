@@ -77,8 +77,7 @@ function buildWave(w, h) {
     's', 
       -(1 - a) * m, -a,
       a, -a,
-    
-<<<<<<< HEAD
+
     's', 
       -(1 - a) * m, a,
       a, a,
