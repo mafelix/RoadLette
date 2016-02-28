@@ -4749,6 +4749,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 19px;
   line-height: 21px;
   height: 60px;
+  width: 10vw;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -7727,6 +7728,8 @@ audio, canvas, video{
 }
 
 #destination {
-  margin-left: 27vw;
+  width: 80vw;
+  text-align: center;
+  position: absolute;
 }
 
