@@ -21,6 +21,12 @@ html {
   width:85vw;
   height:80vh;
 }
+#quotePanel{
+  font-style:italic;
+  font-size: 35px;
+  color: red;
+}
+
 
 body {
   margin: 0;
