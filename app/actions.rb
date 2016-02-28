@@ -1,6 +1,8 @@
 require 'pry'
 # Homepage (Root path)
 include Math
+
+
 helpers do
   WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
 
@@ -60,14 +62,12 @@ helpers do
     end
   end
 
-  def get_geolocation_of_city
+  def get_geolocation_of_city(city,province)
     #get the geolocation of the city_name search so that google views has coordinates to be put in
     #googlegeocode lat long
-    begin
-      @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{@cityname}+#{@province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
-    rescue Exception => msg
-      redirect "/results/index?travel_distance=#{@travel_distance}"
-    end
+    city = city.gsub(' ','')
+    province = province.gsub(' ','')
+    @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{city}+#{province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
     @geolocation = Net::HTTP.get(@uri)
     @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"] 
   end
@@ -197,9 +197,8 @@ get '/results/index' do
     @city_name = city_name(@destination_array)
   end
   #getting city province only if cityname is found and valid
-  get_city_province  
-  get_geolocation_of_city
   @province = get_city_province
+  get_geolocation_of_city(@city_name, @province)
 
   @street_view_lat = @geolocation["lat"]
   @street_view_long = @geolocation["lng"]
