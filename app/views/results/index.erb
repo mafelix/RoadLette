@@ -51,7 +51,7 @@
     frameborder="0" style="border:0"
     src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
     &origin=<%=@lat1%>,<%=@long1%>
-    &destination=<%=@cityname%>
+    &destination=<%=@cityname%>,+<%=@province%>
     &mode=driving" allowfullscreen>
   </iframe></div>
 
@@ -88,18 +88,6 @@
 
  
  %>
-
-<!-- <input type="checkbox" id="check" style="display:none;">
-<label for="check">
-    <img src="http://lorempixel.com/400/400/" width="200">
-    </label>
-<label for="check">
-    <div id="cover">
-    <div id="box">
-    <img src="http://lorempixel.com/400/400/" width="400">
-    </div>
-    </div>
-    </label> -->
 
 <table align = "center">
 <tr>
@@ -195,7 +183,7 @@
 </tr>
 </table>
  
-  <div class="jumbotron">
+  <!-- <div class="jumbotron"> -->
 
 <div id="google_holding">
   <iframe id='googlemaps'
@@ -203,31 +191,28 @@
   height="450"
   frameborder="0" style="border:0"
   src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-   &location=49.2821612,-123.1080174" allowfullscreen>
-
+   &location=<%=@street_view_lat%>,<%=@street_view_long%>" allowfullscreen>
 </br>
-
-<!-- <div class="jumbotron">
+<!-- 
+<div class="jumbotron">
   <div id="google_holding">
     <iframe id='googlemaps'
     width="600"
     height="450"
     frameborder="0" style="border:0"
     src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-    &location=<%=@cityname%>" allowfullscreen>
+    &location=<%=@cityname%>,<%=@province%>" allowfullscreen>
   </iframe>
   </div>
-</div> -->
-
+</div>
+ -->
 </div>
 
 <div class="jumbotron">
   <div class="container">
-
+  <a NAME="codeword">
+    <h1>Random Facts:</h1>
     <h1><%= @city_name %></h1>
-
-  <A NAME="codeword">
-    <h1>Where am I?</h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -241,9 +226,5 @@
             <p><%= @wiki_paragraph %></p>
         </div>
     </div>
-
-
-
-<div>
-  @wiki_link
 </div>
+
