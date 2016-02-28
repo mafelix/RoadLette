@@ -174,9 +174,11 @@ enable :sessions
 
 
 post '/' do
-  @price = params[:price].gsub('$','').to_i
+  @price = params[:price].gsub('$','').gsub(',','').to_i
   @days = params[:days].to_i
+  binding.pry
   (@price = 700) if (@price > 700)
+
 
   @search = Search.create(
   price: @price,
