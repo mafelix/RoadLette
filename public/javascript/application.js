@@ -34,7 +34,7 @@ $(document).ready(function() {
     listTickerInner(options.startIndex);
 }
     
-var textlist = new Array("This is a million dollar idea! - Don Burk", "This is nice! - Monica Olinescu", "This .... fucking sucks! - David VanDusen", "This is NOT better than FoosBall... - Rosy Lee");
+var textlist = new Array("This is a million dollar idea!- Don Burk", "This is nice! - Monica Olinescu", "This .... fucking sucks! - David VanDusen", "This is NOT better than FoosBall... - Rosy Lee");
 
 $(function() {
     listTicker({
