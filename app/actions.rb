@@ -40,10 +40,16 @@ helpers do
     @destination_array << @end_long
   end
 
+  def get_city_province
+    #geonames province getter
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{@end_lat}&lng=#{@end_long}&cities=cities1000&username=powerup7")
+    geonames = Net::HTTP.get(@uri)
+    @province = JSON.parse(geonames)["geonames"][0]["adminName1"]
+  end
 
   def city_name (coordinates)
     #geonames get request to find nearby city
-    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
+    @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities5000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
     json_city_name = get_city_name(JSON.parse(@geonames))
     if json_city_name.nil?
@@ -52,6 +58,15 @@ helpers do
       @cityname = json_city_name
       @real_city_name = @cityname.gsub(' ', '')
     end
+  end
+
+  def get_geolocation_of_city
+    #get the geolocation of the city_name search so that google views has coordinates to be put in
+    #googlegeocode lat long
+    
+    @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{@cityname}+#{@province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
+    @geolocation = Net::HTTP.get(@uri)
+    @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"] 
   end
 
 
@@ -170,7 +185,7 @@ end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
-
+  
   @city_name = nil
   while @city_name.nil?
     calculate_destination
@@ -178,7 +193,14 @@ get '/results/index' do
     @end_long = @destination_array[1]
     @city_name = city_name(@destination_array)
   end
-  
+  #getting city province only if cityname is found and valid
+  get_city_province  
+  get_geolocation_of_city
+  @province = get_city_province
+
+  @street_view_lat = @geolocation["lat"]
+  @street_view_long = @geolocation["lng"]
+
   @wiki_link = get_wiki_link(@destination_array)
   @wiki_paragraph = get_wiki_paragraph(@wiki_link)
   # getting wikipedia picture
