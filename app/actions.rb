@@ -2,20 +2,7 @@ require 'pry'
 # Homepage (Root path)
 include Math
 helpers do
-  
-  # def calculate_destination    #(starting_lat, starting_long)
-  #   @EARTH_RADIUS = 6371   #km
-  #   @R = @EARTH_RADIUS
-  #   @d = @total_distance
-
-  # def get_pictures
-  #   request = Net::HTTP.get(URI.parse('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=06b3edd0e485fa8e237ea30fb17c1b50&safe_search=vancouver&format=json&nojsoncallback=1&auth_token=72157664962446491-8e324e4f345430b0&api_sig=d5058ce551bb380499f653434df16bd9'))
-  #   # response = JSON.parse(@request)["photos"]["photo"][0]["farm"]
-  #   id = JSON.parse(@request)["photos"]["photo"][0]["id"]
-  #   secret = JSON.parse(@request)["photos"]["photo"][0]["secret"]
-  #   server = JSON.parse(@request)["photos"]["photo"][0]["server"]
-  #   farm = JSON.parse(@request)["photos"]["photo"][0]["farm"]
-  # end
+  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
 
 
   def current_user
@@ -59,7 +46,6 @@ helpers do
     @uri = URI.parse("http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{coordinates[0]}&lng=#{coordinates[1]}&cities=cities1000&username=powerup7")
     @geonames = Net::HTTP.get(@uri)
     json_city_name = get_city_name(JSON.parse(@geonames))
-    puts json_city_name
     if json_city_name.nil?
       nil
     else
@@ -98,13 +84,13 @@ helpers do
   end
 
   def get_wiki_paragraph (wiki_link)
+    output = []
     if wiki_link.nil?
-      "NOTHING HERE"
+      nil
     else
       page = HTTParty.get (wiki_link)
       parse_page = Nokogiri::HTML(page)
 
-      output = []
       (0..1).each do |paragraphs|
         pg = parse_page.css('p')[paragraphs]
         unless pg.nil?
@@ -145,8 +131,8 @@ helpers do
     end
 
     if real_image[0].nil? 
-      "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" 
-    elsif (real_image == "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg") && real_image[1] != nil
+      WIKIBOOK
+    elsif (real_image == WIKIBOOK) && real_image[1] != nil
       real_image[1]
     else
       real_image[0]
@@ -197,6 +183,7 @@ get '/results/index' do
   @wiki_paragraph = get_wiki_paragraph(@wiki_link)
   # getting wikipedia picture
 
+  @wiki_img = WIKIBOOK
   @wiki_img = wiki_picture(@wiki_link) unless @wiki_link.nil?
   erb :'/results/index'
 
