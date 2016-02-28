@@ -63,8 +63,11 @@ helpers do
   def get_geolocation_of_city
     #get the geolocation of the city_name search so that google views has coordinates to be put in
     #googlegeocode lat long
-    
-    @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{@cityname}+#{@province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
+    begin
+      @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{@cityname}+#{@province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
+    rescue Exception => msg
+      redirect "/results/index?travel_distance=#{@travel_distance}"
+    end
     @geolocation = Net::HTTP.get(@uri)
     @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"] 
   end
