@@ -78,6 +78,7 @@ function buildWave(w, h) {
       -(1 - a) * m, -a,
       a, -a,
     
+<<<<<<< HEAD
     's', 
       -(1 - a) * m, a,
       a, a,
@@ -114,6 +115,17 @@ function buildWave(w, h) {
 }
 
 buildWave(90, 60);
+var textlist = new Array("This is a million dollar idea!- Don Burk", "This is nice! - Monica Olinescu", "This .... fucking sucks! - David VanDusen", "This is NOT better than FoosBall... - Rosy Lee");
+
+$(function() {
+    listTicker({
+        list: textlist ,
+        startIndex:0,
+        trickerPanel: $('#quotePanel'),
+        interval: 5 * 1000,
+    });
+}); 
+
 
 });
 
