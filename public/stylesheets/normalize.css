@@ -21,10 +21,41 @@ html {
   width:85vw;
   height:80vh;
 }
-#quotePanel{
+
+#quotePanel {
   font-style:italic;
-  font-size: 35px;
-  color: #98b2e6;
+  font-size: 30px;
+  color: white;
+  z-index: 3;
+  text-align: center;
+  bottom: 90px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+#authorPanel {
+  font-style:italic;
+  font-size: 20px;
+  color: white;
+  z-index: 3;
+  text-align: center;
+  bottom: 60px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+#facePanel {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 100px;
+  margin-bottom: 15px;
+}
+#facePanel > img{
+width:100%;
+height:100%;
+border-radius: 100px;
 }
 
 #loader{
@@ -7548,7 +7579,7 @@ audio, canvas, video{
     z-index: 3;
     position: absolute;
     text-align: center;
-    bottom: 400px;
+    bottom: 220px;
     font-size: 20px;
     width: 100%;
     font-family: Circular, 'Helvetica Neue', Helvetica, Arial, sans-serif;

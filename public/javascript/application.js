@@ -1,7 +1,4 @@
-$(document).ready(function() {
-
- // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-  
+$(document).ready(function() {  
   var listTicker = function(options) {
    
     var defaults = {
@@ -30,72 +27,12 @@ $(document).ready(function() {
             listTickerInner(nextIndex);
         }, options.interval);
 
-<<<<<<< HEAD
     };
     
     listTickerInner(options.startIndex);
-=======
-function buildWave(w, h) {
-  
-  const a = h / 4;
-  const y = h / 2;
-  
-  const pathData = [
-    'M', w * 0, y + a / 2, 
-    'c', 
-      a * m, 0,
-      -(1 - a) * m, -a, 
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a,
-    's', 
-      -(1 - a) * m, a,
-      a, a,
-    's', 
-      -(1 - a) * m, -a,
-      a, -a
-  ].join(' ');
-  
-  path.setAttribute('d', pathData);
->>>>>>> 8c69d3a849fe6a95f675dac96587ac68768b11b9
 }
     
-var textlist = new Array("This is a million dollar idea! - Don Burk", "This is nice! - Monica Olinescu", "This .... fucking sucks! - David VanDusen", "This is NOT better than FoosBall... - Rosy Lee");
+var textlist = new Array("This is a million dollar idea!", "This is nice! I'm a happy camper.", "What the hell is this..", "This is NOT better than FoosBall...");
 
 $(function() {
     listTicker({
@@ -105,8 +42,28 @@ $(function() {
         interval: 5 * 1000,
     });
   });
+
+var authorlist = new Array("-Don Burks", "- Monica Olinescu", "- David VanDusen", "- Rosy Lee");
+
+$(function() {
+    listTicker({
+        list: authorlist ,
+        startIndex:0,
+        trickerPanel: $('#authorPanel'),
+        interval: 5 * 1000,
+    });
+  });
 });
 
+// var imglist = new Array("1", "2", "3", "4");
 
-
+// $(function() {
+//     listTicker({
+//         list: imglist ,
+//         startIndex:0,
+//         trickerPanel: $('#facePanel'),
+//         interval: 5 * 1000,
+//     });
+//   });
+// });
 

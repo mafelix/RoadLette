@@ -176,7 +176,6 @@ enable :sessions
 post '/' do
   @price = params[:price].gsub('$','').gsub(',','').to_i
   @days = params[:days].to_i
-  binding.pry
   (@price = 700) if (@price > 700)
 
 
