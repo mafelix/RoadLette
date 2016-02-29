@@ -100,8 +100,7 @@
       server << JSON.parse(request)["photos"]["photo"][i]["server"]
       farm << JSON.parse(request)["photos"]["photo"][i]["farm"]
     end
- 
- %>
+    %>
 
 <table align = "center">
 <tr>
@@ -179,6 +178,7 @@
       </div>
       </label>
 </div>
+</td>
 <td>
 <div>
   <input type="checkbox" id="check5" style="display:none;">
@@ -193,11 +193,12 @@
       </div>
       </label>
 </div>
-
+</td>
 </tr>
 </table>
+
  
-  <!-- <div class="jumbotron"> -->
+  
 
 <div id="google_holding">
   <iframe id='googlemaps'
@@ -205,27 +206,15 @@
   height="450"
   frameborder="0" style="border:0"
   src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-   &location=<%=@street_view_lat%>,<%=@street_view_long%>" allowfullscreen>
-</br>
-<!-- 
-<div class="jumbotron">
-  <div id="google_holding">
-    <iframe id='googlemaps'
-    width="600"
-    height="450"
-    frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc
-    &location=<%=@cityname%>,<%=@province%>" allowfullscreen>
+  &location=<%=@street_view_lat%>,<%=@street_view_long%>" allowfullscreen>
   </iframe>
-  </div>
-</div>
--->
+</br>
 
 </div>
 
 <div class="jumbotron">
   <div class="container">
-  <a NAME="codeword">
+  <a NAME="codeword"></a>
     <h1>Random Facts:</h1>
     <h1><%= @city_name %></h1>
 
