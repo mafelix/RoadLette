@@ -7,8 +7,8 @@ gem 'json'
 
 # gem 'uri'
 # gem 'net/http'
-# pg gem for heroku
-gem 'pg'
+
+
 
 gem 'flickraw'
 
