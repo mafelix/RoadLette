@@ -2,7 +2,6 @@ require 'pry'
 # Homepage (Root path)
 include Math
 
-
 helpers do
   WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" #img for when no wiki img is found 
   START_LAT = 49.2820150
@@ -172,7 +171,7 @@ end
 
 enable :sessions
 
-
+# These are routes
 post '/' do
   @price = params[:price].gsub('$','').gsub(',','').to_i
   @days = params[:days].to_i
