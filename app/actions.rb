@@ -1,4 +1,3 @@
-require 'pry'
 # Homepage (Root path)
 include Math
 
@@ -198,9 +197,7 @@ post '/' do
   redirect "/results/index?travel_distance=#{@travel_distance}"
 end
 
-get '/' do
-  erb :index
-end
+
 
 post '/results/index' do
 
@@ -241,6 +238,10 @@ get '/results/index' do
   # @photo = get_photos[]
 end
 
+get '/' do
+  erb :index
+end
+
 get '/users/signup' do
   erb :'users/signup'
 end
@@ -254,8 +255,8 @@ post '/users/signup' do
     session[:flash] = "Successfully created user!"
     redirect '/'
   else
-    session[:flash] = "User could not be created"
-    erb :'users/signup'
+    session[:flash] = "User could not be created.  Username must be greater than 3 characters and the password must be between 5 and 20 characters."
+    redirect 'users/signup'
   end
 end
 
@@ -273,7 +274,7 @@ post '/users/signin' do
     redirect '/'
   else
     session[:flash] = "Invalid username or password"
-    erb :'/users/signin'
+    redirect '/users/signin'
   end
 end
 

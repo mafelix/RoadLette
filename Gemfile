@@ -29,3 +29,6 @@ end
 gem 'nokogiri'
 gem 'httparty'
 
+group :production do
+  gem 'pg'
+end
