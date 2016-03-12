@@ -1,4 +1,4 @@
-require 'pry'
+
 # Homepage (Root path)
 include Math
 
