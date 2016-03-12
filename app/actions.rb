@@ -2,13 +2,18 @@ require 'pry'
 # Homepage (Root path)
 include Math
 
-
+enable :sessions
 helpers do
-  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" #img for when no wiki img is found 
+  WIKIBOOK = "https://upload.wikimedia.org/wikipedia/en/9/99/Question_book-new.svg" #img for when no wiki img is found
   START_LAT = 49.2820150
   START_LONG = -123.1082410
 
   #defines the current logged in user
+  def check_flash
+    @flash = session[:flash] if session[:flash]
+    session[:flash] = nil
+  end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -30,14 +35,14 @@ helpers do
     brng = rand(360).to_f   # bearing (in radians)
     d = @travel_distance     # distance to travel in km
     @r = 6371.0    # earth's radius in km
-    
-    lat2 = Math.asin( Math.sin(lat1)*Math.cos(d/@r) + 
-    Math.cos(lat1)*Math.sin(d/@r)*Math.cos(brng) )
-    # => 0.9227260710962849                  
 
-    lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/@r)*Math.cos(lat1), 
+    lat2 = Math.asin( Math.sin(lat1)*Math.cos(d/@r) +
+    Math.cos(lat1)*Math.sin(d/@r)*Math.cos(brng) )
+    # => 0.9227260710962849
+
+    lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/@r)*Math.cos(lat1),
      Math.cos(d/@r)-Math.sin(lat1)*Math.sin(lat2))
-    # => 0.0497295729068199      
+    # => 0.0497295729068199
     @lat1 = 49.2820150
     @long1 = -123.1082410
     @end_lat = degree(lat2)
@@ -76,7 +81,7 @@ helpers do
     province = province.gsub(' ','')
     @uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{city}+#{province}&key=AIzaSyAPV0_sCF_Qe5jsKsHd5DCfVC1c3yI3MLc")
     @geolocation = Net::HTTP.get(@uri)
-    @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"] 
+    @geolocation = JSON.parse(@geolocation)["results"][0]["geometry"]["location"]
   end
 
   #gets the wikipedia link of the city given coordinates
@@ -134,9 +139,9 @@ helpers do
   #pulls out the main image from a wikipedia link
   def wiki_picture (wiki_link)
     wiki_page = wiki_link
-    
+
     page = HTTParty.get (wiki_page)
-       
+
     parse_page = Nokogiri::HTML(page)
 
     wiki_pic = []
@@ -153,14 +158,14 @@ helpers do
       pic_link << "https://en.wikipedia.org#{link}"
     end
 
-    
+
     real_image = []
     pic_link.each do |i|
       a_image = Nokogiri::HTML(HTTParty.get(i)).css('.fullImageLink a')[0]
       (real_image << "https:#{a_image['href']}") unless a_image.nil?
     end
 
-    if real_image[0].nil? 
+    if real_image[0].nil?
       WIKIBOOK
     elsif (real_image == WIKIBOOK) && real_image[1] != nil
       real_image[1]
@@ -171,6 +176,10 @@ helpers do
 end
 
 enable :sessions
+before do
+	current_user
+	check_flash
+end
 
 
 post '/' do
@@ -204,7 +213,7 @@ end
 
 get '/results/index' do
   @travel_distance = params[:travel_distance].to_f
-  
+
   @city_name = nil
   while @city_name.nil?
     calculate_destination
@@ -242,8 +251,10 @@ post '/users/signup' do
     password: params[:password]
     )
   if @user.save
+    session[:flash] = "Successfully created user!"
     redirect '/'
   else
+    session[:flash] = "User could not be created"
     erb :'users/signup'
   end
 end
@@ -257,15 +268,16 @@ post '/users/signin' do
     name: params[:name],
     password: params[:password]
     )
-  if @user.password == params[:password] 
+  if @user != nil && @user.password == params[:password]
     session[:user_id] = @user.id
     redirect '/'
   else
+    session[:flash] = "Invalid username or password"
     erb :'/users/signin'
   end
 end
 
-get '/users/signout' do 
+get '/users/signout' do
   session.clear
   redirect '/'
 end

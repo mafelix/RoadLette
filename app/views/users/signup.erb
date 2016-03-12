@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Travlett</a>
+      <a class="navbar-brand" href="/">Roadlette</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -16,8 +16,8 @@
 </nav>
 
 <div id="signupfield">
-  <h3>Please enter a username and password</h3>
 
+  <h3>Please enter a username and password</h3>
   <form method="post" class="form-horizontal" action="/users/signup">
     <fieldset>
       <div class="form-group">
@@ -30,7 +30,7 @@
         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
         <div class="col-lg-10">
           <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
-   
+
       <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
           <button type="reset" class="btn btn-default">Cancel</button>
@@ -39,4 +39,6 @@
       </div>
     </fieldset>
   </form>
+  <%= erb :show_flash %>
+
 </div>

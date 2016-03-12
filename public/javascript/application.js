@@ -1,13 +1,13 @@
-$(document).ready(function() {  
+$(document).ready(function() {
   var listTicker = function(options) {
-   
+
     var defaults = {
         list: [],
         startIndex:0,
         interval: 3 * 1000,
-    }   
+    }
     var options = $.extend(defaults, options);
-       
+
     var listTickerInner = function(index) {
 
         if (options.list.length == 0) return;
@@ -20,7 +20,7 @@ $(document).ready(function() {
             $(this).html(value).fadeIn(3000)
             $(this).html(value).fadeOut(3000);
         });
-        
+
         var nextIndex = (index + 1) % options.list.length;
 
         setTimeout(function() {
@@ -28,10 +28,10 @@ $(document).ready(function() {
         }, options.interval);
 
     };
-    
+
     listTickerInner(options.startIndex);
 }
-    
+
 var textlist = new Array("This is a million dollar idea!", "This is nice! I'm a happy camper.", "What the hell is this..", "This is NOT better than FoosBall...");
 
 $(function() {
@@ -66,4 +66,3 @@ $(function() {
 //     });
 //   });
 // });
-
