@@ -182,19 +182,20 @@ end
 
 
 post '/' do
-  @price = params[:price].gsub('$','').gsub(',','').to_i
-  @days = params[:days].to_i
-  (@price = 700) if (@price > 700)
+  # @price = params[:price].gsub('$','').gsub(',','').to_i
+  # @days = params[:days].to_i
+  # (@price = 700) if (@price > 700)
 
 
-  @search = Search.create(
-  price: @price,
-  days: @days
-  )
-  # user_id: current_user.id
-  @travel_distance = travel_distance(@price, @days)
-  session[:distance] = @travel_distance
-  redirect "/results/index?travel_distance=#{@travel_distance}"
+  # @search = Search.create(
+  # price: @price,
+  # days: @days
+  # )
+  # # user_id: current_user.id
+  # @travel_distance = travel_distance(@price, @days)
+  # session[:distance] = @travel_distance
+  # redirect "/results/index?travel_distance=#{@travel_distance}"
+  redirect "/results/index?travel_distance=574.6882489881052"
 end
 
 
