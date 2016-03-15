@@ -206,7 +206,8 @@ post '/results/index' do
   # @travel_distance = travel_distance(params[:price].to_i, params[:days].to_i)
 
   @travel_distance = session[:distance]
-  redirect "/results/index?travel_distance=#{@travel_distance}"
+  # redirect "/results/index?travel_distance=#{@travel_distance}"
+  redirect "/results/index?travel_distance=250"
 end
 
 get '/results/index' do
