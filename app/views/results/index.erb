@@ -92,10 +92,7 @@
     server=[]
     farm=[]
     for i in 0..5
-      # id = JSON.parse(request)["photos"]["photo"][2]["id"]
-      # secret = JSON.parse(request)["photos"]["photo"][2]["secret"]
-      # server = JSON.parse(request)["photos"]["photo"][2]["server"]
-      # farm = JSON.parse(request)["photos"]["photo"][2]["farm"]
+
       id << JSON.parse(request)["photos"]["photo"][i]["id"]
       secret << JSON.parse(request)["photos"]["photo"][i]["secret"]
       server << JSON.parse(request)["photos"]["photo"][i]["server"]
